@@ -1,0 +1,71 @@
+{
+  "id": "/demo/node-with-ceph",
+  "cmd": null,
+  "cpus": 0.5,
+  "mem": 128,
+  "disk": 0,
+  "instances": 1,
+  "acceptedResourceRoles": [
+    "*"
+  ],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "forcePullImage": false,
+      "image": "common-docker-starter-node:8.15.1-alpine",
+      "parameters": [
+        {
+          "key": "dns",
+          "value": "10.20.5.31"
+        },
+        {
+          "key": "volume-driver",
+          "value": "rexray"
+        },
+        {
+          "key": "volume",
+          "value": "helloworld-data-on-node:/server/data"
+        }
+      ],
+      "privileged": true
+    },
+    "volumes": [],
+    "portMappings": [
+      {
+        "containerPort": 0,
+        "labels": {},
+        "protocol": "tcp",
+        "servicePort": 10004
+      }
+    ]
+  },
+  "env": {
+    "downloadURL": "http://download.data.marathon.mesos/demo/nodejs-helloworld.tar.gz",
+    "TZ": "Asia/Shanghai",
+    "dns": "10.20.5.31",
+    "PORT": "80"
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 3,
+      "path": "/",
+      "port": 80,
+      "protocol": "MESOS_HTTP",
+      "ipProtocol": "IPv4",
+      "timeoutSeconds": 20,
+      "delaySeconds": 15
+    }
+  ],
+  "labels": {
+    "org.projectcalico.label.role": "frontend"
+  },
+  "networks": [
+    {
+      "name": "frontend",
+      "mode": "container"
+    }
+  ],
+  "portDefinitions": []
+}
