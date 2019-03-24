@@ -1,6 +1,10 @@
 #!/bin/bash
 echo "starter.sh version 2019.02.04"
 current_file_path=$(cd "$(dirname "$0")"; pwd)
+
+echo "starting sshd for remote login... 支持自定义用户root密码, 可以通过SSHD_PASSWORD环境变量传入修改默认的root密码"
+/run_sshd.sh &
+
 #这个目录是根据Dockerfile里 ADD starter.sh  /server/ 推断出肯定是/server
 cd ${current_file_path}
 echo "downloadURL="$downloadURL
